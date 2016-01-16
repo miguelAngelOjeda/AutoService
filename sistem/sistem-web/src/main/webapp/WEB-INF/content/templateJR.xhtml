@@ -1,0 +1,49 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+    <f:view contentType="text/html">
+        <h:head>
+            <f:facet name="middle">
+                <h:outputStylesheet library="bootstrap" name="resources/css/bootstrap.css"/>
+                
+            </f:facet>
+
+           
+            <script>
+                var contexto = '${pageContext.request.contextPath}';
+            </script>
+            
+        </h:head>
+        <h:body>
+            
+
+            <p:layout fullPage="true">
+                <p:layoutUnit position="south" closable="true" collapsible="true">
+                    <div>
+                        <center style="font-size: 12px;">Todas las marcas y logotipos que aparecen en este sitio, son propiedad de Pronet.</center>
+                        <center style="font-size: 14px;">&copy; 2015 Pronet | All Rights Reserved | Version 1.0</center>
+                    </div>
+                </p:layoutUnit>
+
+                <p:layoutUnit position="west" header="Opciones de Menú" collapsible="true"
+                              style="font-size: 14px;" visible="#{beanMenu.visibleMenu}">
+                    <h:form id="menuJavaRevolutions">
+                        <ui:include src="/WEB-INF/content/opcionesMenu.xhtml"/>
+                    </h:form>
+                </p:layoutUnit>
+
+                <p:layoutUnit position="center" header="Pronet S.A" style="margin-bottom: 20px; text-height: 25px">
+                    
+                        <ui:insert name="bodyJR">&copy; 2015 Pronet. . .
+                    
+                        </ui:insert>
+                    
+                </p:layoutUnit>
+            </p:layout>
+        </h:body>
+    </f:view>
+    
+</html>

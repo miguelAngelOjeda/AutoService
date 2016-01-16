@@ -1,0 +1,90 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<ui:composition template="/WEB-INF/content/templateJR.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui">
+    <ui:define name="bodyJR">
+        <p:panel>
+            
+            <table width="35%" align="center">
+                    <td width="35%">
+                        <p:panel>
+                        <h:form id="formLogin">
+                            <p:focus for="usuario"/>
+                            <table align="center">
+                                <tr>
+                                    <td colspan="2" style="font-weight: bold; size: 20px;">Ingresa tu Usuario y tu Contraseña</td>
+                                </tr>
+                                <tr>
+                                    <td style="font-weight: bold; size: 12px; color: blue;" align="right">Usuario: </td>
+                                    <td><p:inputText id="usuario"/></td>
+                                </tr>
+                                <tr>
+                                    <td style="font-weight: bold; size: 12px; color: blue;" align="right">Contraseña: </td>
+                                    <td><p:password id="password"/></td>
+                                </tr>
+                                <tr>
+                                    <td><p:commandButton type="button" value="Cancelar" onclick="window.location.reload();"/></td>
+                                    <td><p:commandButton type="button" value="Aceptar" onclick="sendData();"/></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">
+                                    <center>
+                                        <span id="errorSpan" style="color: red; font-weight: bold;"></span>
+                                    </center>
+                                    </td>
+                                </tr>
+                            </table>
+                        </h:form>
+                        </p:panel>
+                    </td>
+                
+            </table>
+        </p:panel>
+        
+        <script type="text/javascript" language="JavaScript">            
+            window.onload = function carga() {
+                var error = '#{request.getParameter("error")}';
+                if(error == 'credenciales') {
+                    error = 'Usuario o Contraseña Inválidos.';
+                    alert(error);
+                    document.getElementById("errorSpan").innerHTML = error;
+                }
+            }
+            
+            function datosValidos() {
+                var usuario = document.getElementById("formLogin:usuario");
+                var password = document.getElementById("formLogin:password");
+                if (password.value == "") {
+                    if (usuario.value == "") {
+                        alert("Ingresa tu usuario y tu password");
+                        usuario.focus();
+                        return false;
+                    }
+                } else if (usuario.value == "") {
+                    alert("Ingresa tu usuario");
+                    usuario.focus();
+                    return false;
+                }
+                if (password.value == "") {
+                    alert("Ingresa tu contraseña");
+                    password.focus();
+                    return false;
+                }
+                return true;
+            }
+            
+            function sendData() {
+                if(datosValidos()) {
+                    var forma = document.getElementById("formLogin");
+                    forma.action = "j_spring_security_check";
+                    forma.method = "POST";
+                    forma.submit();
+                }
+            }
+        </script>
+        
+    </ui:define>
+</ui:composition>

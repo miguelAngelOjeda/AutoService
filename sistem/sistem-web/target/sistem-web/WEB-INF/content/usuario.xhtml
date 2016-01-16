@@ -1,0 +1,172 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<ui:composition template="/WEB-INF/content/templateJR.xhtml"
+    xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+    <ui:define name="bodyJR">
+        <p:tooltip />
+                    
+                    <div  class="ui-messages ui-widget" aria-live="polite" data-global="false" data-summary="data-summary" data-detail="data-detail" data-severity="all,error" data-redisplay="true">
+                        <div id="error" class="ui-messages-fatal ui-corner-all" style="display: none">
+                            <a href="#" class="ui-messages-close" onclick="$(this).parent().slideUp();return false;">
+                                <span class="ui-icon ui-icon-close"></span>
+                            </a>
+                            <span class="ui-messages-fatal-icon"></span>
+                            <ul>
+                                <li><span class="ui-messages-fatal-summary">Fatal!</span>
+                                    <span id="messages" class="ui-messages-fatal-detail"></span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div  class="ui-messages ui-widget" aria-live="polite" data-global="false" data-summary="data-summary" data-detail="data-detail" data-severity="all,error" data-redisplay="true">
+                        <div id="info" class="ui-messages-info ui-corner-all" style="display: none">
+                            <a href="#" class="ui-messages-close" onclick="$(this).parent().slideUp();return false;">
+                                <span class="ui-icon ui-icon-close"></span>
+                            </a>
+                            <span class="ui-messages-info-icon"></span>
+                            <ul>
+                                <li><span class="ui-messages-info-summary">Fatal!</span>
+                                    <span id="messages" class="ui-messages-info-detail"></span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="page-header">
+                        <h1>Datos<small> Usuario</small></h1>
+                    </div>
+         
+                    <h:panelGrid columns="2" style="margin-bottom: 10px" cellpadding="5">
+                    <tr>
+                        <td style="font-weight: bold; size: 15px;" align="right">Nombre: </td>
+                      
+                    <p:inputText id="nombre" required="true" style="width: 250px" label="Nombre del Usuario" value="${usuario.nombre}">
+                        <f:validateLength minimum="2"/>
+                    </p:inputText>
+                       
+                    </tr>
+                    <tr>
+                        <td style="font-weight: bold; size: 15px;" align="right">Alias: </td>
+                        <p:inputText id="alias" required="true" style="width: 250px" label="Alias del Usuario" value="${usuario.alias}"/>
+                    </tr>
+                    <tr>
+                        <td style="font-weight: bold; size: 15px;" align="right">Documento: </td>
+                        <p:inputText id="documento" style="width: 250px" label="Documento" value="${usuario.documento}"/>
+                    </tr>
+                    <tr>
+                        <td style="font-weight: bold; size: 15px;" align="right">Clave de Acceso: </td>
+                        <p:inputText id="clave" required="true" style="width: 250px" label="Clave" />
+                    </tr>
+                    <tr>
+                        <td style="font-weight: bold; size: 15px;" align="right">Telefono: </td>
+                        <p:inputText id="telefono" style="width: 250px" label="Telefono" value="${usuario.telefono}"/>
+                    </tr>
+                    <tr>
+                        <td style="font-weight: bold; size: 15px;" align="right">Email: </td>
+                        <p:inputText id="email" style="width: 250px" label="Email" value="${usuario.email}"/>
+                    </tr>
+                    <tr>
+                        <td style="font-weight: bold; size: 15px;" align="right">Rol: </td>
+                        
+                        <p:selectOneMenu id="rol" style="width: 250px" required="true">
+                            <f:selectItem itemLabel="Seleccionar Rol" itemValue=""/>
+                            <f:selectItem itemLabel="Administrador" itemValue="Administrador"/>
+                            <f:selectItem itemLabel="Emisor" itemValue="Emisor"/>
+                        </p:selectOneMenu>
+                        
+
+                        
+                    </tr>
+                    
+                </h:panelGrid>
+                    <tr>
+                        <td><p:commandButton  type="button" value="Cancelar" onclick="window.location.reload();"/></td>
+                        <td><p:commandButton update="panelUsuario" type="button" value="Guardar" onclick="sendData();"/></td>
+                    </tr>
+                
+                
+            
+       
+        
+        <script type="text/javascript" language="JavaScript">       
+            
+            window.onload = function carga() {
+                var error = '#{request.getParameter("error")}';
+                if(error == 'credenciales') {
+                    error = 'Usuario o Contraseña Inválidos.';
+                    alert(error);
+                    document.getElementById("errorSpan").innerHTML = error;
+                }
+            }
+            
+            function datosValidos() {
+                var usuario = document.getElementById("formLogin:usuario");
+                var password = document.getElementById("formLogin:password");
+                if (password.value == "") {
+                    if (usuario.value == "") {
+                        alert("Ingresa tu usuario y tu password");
+                        usuario.focus();
+                        return false;
+                    }
+                } else if (usuario.value == "") {
+                    alert("Ingresa tu usuario");
+                    usuario.focus();
+                    return false;
+                }
+                if (password.value == "") {
+                    alert("Ingresa tu contraseña");
+                    password.focus();
+                    return false;
+                }
+                return true;
+            }
+            
+            function sendData() {
+                    console.log(contexto);
+                    console.log('${pageContext.request}');
+                    console.log('${request.contextPath}');
+                    console.log('${contextPath}');
+                    var nombre = document.getElementById("formUsuario:nombre");
+                    var alias = document.getElementById("formUsuario:alias");
+                    var documento = document.getElementById("formUsuario:documento");
+                    var clave = document.getElementById("formUsuario:clave");
+                    var telefono = document.getElementById("formUsuario:telefono");
+                    var email = document.getElementById("formUsuario:email");
+                    var rol = document.getElementById("formUsuario:rol_input").value;
+                    $.ajax({
+                    type:'POST',
+                    url: '${request.contextPath}' + '/usuarios/guardar', 
+                    data: {
+                            nombre: nombre.value,
+                            alias: alias.value,
+                            documento: documento.value,
+                            claveAcceso: clave.value,
+                            telefono: telefono.value,
+                            email: email.value,
+                            nombreRol: rol
+                    },
+                    success: function(){
+                        var error = "errrroooo";
+                        //AdfPage.PAGE.addMessage('messages',new)
+                        
+                        
+                        var div = document.getElementById("error");
+                        var div1 = document.getElementById("info");
+                        div.style.display = '';
+                        div1.style.display = '';
+                        document.getElementById("messages").innerHTML = error;
+                        
+                    },
+                    async: false
+                });
+                   
+                
+            }
+        </script>
+        
+    </ui:define>
+
+</ui:composition>

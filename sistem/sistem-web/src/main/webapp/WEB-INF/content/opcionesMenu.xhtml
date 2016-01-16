@@ -1,0 +1,26 @@
+ 
+<html xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
+<p:menu>
+    <p:submenu label="Menús autorizados">
+        
+        <c:if test ="#{beanMenu.disInicio == false}" >
+        
+        <p:menuitem value="Inicio" ajax="false"
+                    disabled="#{beanMenu.disInicio}"
+                    action="#{beanMenu.disabledInicio}"
+                    style="font-weight: bold; font-size: 14px;"/>
+        </c:if>
+        <p:menuitem value="Usuarios" ajax="false"                   
+                    disabled="#{beanMenu.disUsuarios}"
+                    action="#{beanMenu.disabledUsuarios}"
+                    style="font-weight: bold; font-size: 14px;"/>
+        <p:menuitem value="Servicio" ajax="false"
+                    disabled="#{beanMenu.disUsuarios}"
+                    url="/usuarios"
+                    style="font-weight: bold; font-size: 14px;"/>
+    </p:submenu>
+</p:menu>
+
+</html>
